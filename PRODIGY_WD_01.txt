@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Navigation Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            transition: background 0.3s, padding 0.3s;
+            z-index: 1000;
+        }
+
+        nav.scrolled {
+            background: #222;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #ffeb3b;
+        }
+
+        .content {
+            margin-top: 100px;
+            padding: 20px;
+        }
+
+        section {
+            padding: 100px 20px;
+            border-bottom: 1px solid #ddd;
+            background-size: cover;
+            color: #fff;
+        }
+
+        section h1 {
+            font-size: 2.5em;
+            margin: 0 0 20px 0;
+        }
+
+        section p {
+            font-size: 1.2em;
+        }
+
+        .home {
+            background: url('home.jpg') no-repeat center center;
+        }
+
+        .about {
+            background: url('about.jpg') no-repeat center center;
+        }
+
+        .services {
+            background: url('services.jpg') no-repeat center center;
+        }
+
+        .contact {
+            background: url('contact.jpg') no-repeat center center;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 50px;
+        }
+
+        .services-list {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .services-list li {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <section id="home" class="home">
+            <div class="overlay">
+                <h1>Home</h1>
+                <p>Welcome to our company's website. We are dedicated to providing top-notch services to meet your needs.</p>
+            </div>
+        </section>
+        <section id="about" class="about">
+            <div class="overlay">
+                <h1>About Us</h1>
+                <p>Our company, XYZ Solutions, was founded in 2010 with the mission to deliver innovative and efficient solutions to our clients. Over the years, we have grown into a reputable firm known for our commitment to quality and customer satisfaction. Our team of experts works tirelessly to ensure that our services exceed your expectations.</p>
+                <p>We specialize in a range of services designed to help businesses thrive in today's competitive market. Our approach is client-centric, focusing on understanding your unique needs and providing customized solutions to achieve your goals.</p>
+            </div>
+        </section>
+        <section id="services" class="services">
+            <div class="overlay">
+                <h1>Our Services</h1>
+                <ul class="services-list">
+                    <li>Web Development: Building responsive and robust websites to establish your online presence.</li>
+                    <li>Mobile App Development: Creating user-friendly mobile applications for both iOS and Android platforms.</li>
+                    <li>Digital Marketing: Implementing effective digital marketing strategies to enhance your brand visibility.</li>
+                    <li>IT Consulting: Providing expert advice to optimize your IT infrastructure and operations.</li>
+                    <li>Cloud Solutions: Offering scalable cloud services to support your business needs.</li>
+                    <li>Cybersecurity: Ensuring the protection of your data and systems from cyber threats.</li>
+                </ul>
+            </div>
+        </section>
+        <section id="contact" class="contact">
+            <div class="overlay">
+                <h1>Contact Us</h1>
+                <p>Get in touch with us to learn more about our services and how we can assist you. We look forward to hearing from you!</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const navLinks = navbar.querySelectorAll('a');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                // Highlight active link
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseover', function() {
+                    link.style.color = '#ffeb3b';
+                });
+
+                link.addEventListener('mouseout', function() {
+                    if (!link.classList.contains('active')) {
+                        link.style.color = '#fff';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
